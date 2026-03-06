@@ -81,8 +81,159 @@ public interface ICell {
     void resetGrids();
 }</pre><br>
 
-Test plan (per esprimere i requisiti che le interfacce non sono in grado di esprimere ). 
+Test plan (per esprimere i requisiti che le interfacce non sono in grado di esprimere).<br>
 
+<pre>
+public class CellTest {
+   private ICell c;
+	@Before
+	public void setup() {
+		System.out.println("ConwayLifeTest | setup");	
+	    c = new Cell();
+	}
+	@After
+	public void down() {
+		System.out.println("ConwayLifeTest | down");
+	}
+	
+	@Test
+	public void testCellAlive() {
+		System.out.println("ConwayLifeTest | doing alive");
+		c.setStatus(true);
+		boolean r = c.isAlive();
+		assertTrue(r);
+		
+	}
+	
+	@Test
+	public void testCellDead() {
+		System.out.println("ConwayLifeTest | doing dead");
+		c.setStatus(false);
+		boolean r = c.isAlive();
+		assertTrue( !r);
+	}	
+}</pre>
+
+<pre>
+	public class GridTest {
+	private static final int nRows=5;
+	private static final int nCols=5;
+	
+private IGrid grid;
+
+	@Before
+	public void setup() {
+		System.out.println("GridTest | setup");	
+		grid= new Grid(nRows,nCols);
+	}
+	@After
+	public void down() {
+		System.out.println("GridTest | down");
+	}
+	
+	@Test
+	public void testDims() {
+		System.out.println("testDims ---------------------" );
+		int nr = grid.getRowsNum();
+		int nc = grid.getColsNum();
+		assertTrue( nr==nRows && nc==nCols );
+	}
+	@Test
+	public void testCGridCellValue() {
+		System.out.println("testCGridCellValue ---------------------" );
+		grid.setCellValue(0,0,true);
+		assertTrue(   grid.getCellValue(0,0) );
+		assertFalse(  grid.getCellValue(0,1) );
+	}
+	@Test
+	public void testGridRep() {
+		System.out.println("testGridRep ---------------------" );
+ 		System.out.println(""+grid);
+		assertTrue( grid.toString().startsWith(". . . . ."));
+	}
+	@Test
+	public void testPrintGrid() {
+		System.out.println("testPrintGrid ---------------------" );
+		grid.setCellValue(0,0,true);
+		grid.setCellValue(0,1,true);
+		grid.setCellValue(0,2,true);
+		grid.setCellValue(0,3,true);
+		grid.setCellValue(0,4,true);
+		//grid.printGrid();
+	}
+}
+
+</pre>
+
+<pre>
+	public class ConwayLifeTest {
+	private static final int nRows=5;
+	private static final int nCols=5;
+	private LifeInterface lifemodel; 
+
+	@Before
+	public void setup() {
+		System.out.println("ConwayLifeTest | setup");	
+		lifemodel = Life.CreateLife(nRows,nCols);
+	}
+
+	@After
+	public void down() {
+		System.out.println("ConwayLifeTest | down");
+	}
+
+ 
+	@Test
+	public void testAppl() {
+		LifeInterface gameModel       = new Life(nRows, nCols);
+		IOutDev outputDevice          = new MockOutdev();
+		GameController lifeController = new LifeController(gameModel, outputDevice);
+		int genTime                   = lifeController.getGenTime();
+        lifeController.switchCellState(2, 1);
+        lifeController.switchCellState(2, 2);
+        lifeController.switchCellState(2, 3);
+        lifeController.onStart();
+        //gameModel.nextGeneration();
+        int nstep = 4;
+        int delay = genTime * nstep;
+        lifeController.onStart();
+        CommUtils.delay(delay);
+        lifeController.onStop();
+        assertTrue( lifeController.numEpoch() == (nstep-1) );
+        lifeController.onClear();
+        outputDevice.close();
+        assertTrue( lifeController.numEpoch() == 0 );
+        
+//        MainConwayLifeJava app = new MainConwayLifeJava();
+//        app.configureTheSystemWitMockOutdev();
+	}
+	
+	
+	//@Test
+	public void testOscilla() {
+		System.out.println("testOscilla ---------"  );
+		// Configurazione orizzontale
+	    lifemodel.setCell(2, 1, true); 
+	    lifemodel.setCell(2, 2, true);
+	    lifemodel.setCell(2, 3, true);
+	    System.out.println("testOscilla | Stato Iniziale:\n" + lifemodel.getGrid());
+
+	    lifemodel.nextGeneration();
+	    System.out.println("testOscilla | after 1 gen:\n" + lifemodel.getGrid());
+	    // Verifica che sia diventato verticale
+	    assertTrue(lifemodel.isAlive(1, 2)); 
+	    assertTrue(lifemodel.isAlive(2, 2));
+	    assertTrue(lifemodel.isAlive(3, 2));
+	    assertFalse(lifemodel.isAlive(2, 1));
+
+	    lifemodel.nextGeneration();
+	    System.out.println("testOscilla | after 2 gen :\n" + lifemodel.getGrid());
+	    // Verifica che sia tornato orizzontale (Periodo 2)
+	    assertTrue(lifemodel.isAlive(2, 1));
+	    assertTrue(lifemodel.isAlive(2, 2));
+	    assertTrue(lifemodel.isAlive(2, 3));
+	}	
+</pre>
 
 
 
