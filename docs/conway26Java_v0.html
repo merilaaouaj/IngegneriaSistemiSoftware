@@ -42,15 +42,16 @@ R2  L’utente umano deve poter:
   
 
 <h2>Requirement analysis</h2>
-Cosa intende il committente per Cell, Grid e Life?
+Cosa intende il committente per Cell, Grid e Life? <br>
 
-<code>public interface ICell {
+<pre>
+public interface ICell {
 	void setStatus(boolean v); //enità cella ha la capacità di modificare il proprio stato interno a true o false (vivo o morto)
 	boolean isAlive();  //entità cella ha la capacità di rispondere a una query per dire se è viva o morta
 	void switchCellState(); //entità cella ha la capacità di cambiare stato (da viva a morta e viceversa)
-}</code>
-	
-<code>public interface IGrid {
+}
+</pre>	<br>
+<pre>public interface IGrid {
 	  public int getRowsNum(); //+ quante righe ha l'entità grid
 	  public int getColsNum(); //+ quante colonne ha l'entità grid
 	  public void setCellValue(int x, int y, boolean state); //- 
@@ -58,9 +59,9 @@ Cosa intende il committente per Cell, Grid e Life?
 	  public boolean getCellValue(int x, int y);
 	  public void reset(); //- riporta le celle allo stato (morte) 
 }
-</code>
+</pre><br>
 
-<code>public interface LifeInterface {
+<pre>public interface LifeInterface {
 	/** Calcola l'evoluzione dello stato alla generazione successiva */
     void nextGeneration();
 
@@ -78,7 +79,7 @@ Cosa intende il committente per Cell, Grid e Life?
     
     /** pulisce */
     void resetGrids();
-}</code>
+}</pre><br>
 
 Test plan (per esprimere i requisiti che le interfacce non sono in grado di esprimere ). 
 
