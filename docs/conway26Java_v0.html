@@ -50,7 +50,7 @@ public interface ICell {
 	boolean isAlive();  //entità cella ha la capacità di rispondere a una query per dire se è viva o morta
 	void switchCellState(); //entità cella ha la capacità di cambiare stato (da viva a morta e viceversa)
 }
-</pre>	<br>
+</pre>
 <pre>public interface IGrid {
 	  public int getRowsNum(); //+ quante righe ha l'entità grid
 	  public int getColsNum(); //+ quante colonne ha l'entità grid
@@ -59,7 +59,7 @@ public interface ICell {
 	  public boolean getCellValue(int x, int y);
 	  public void reset(); //- riporta le celle allo stato (morte) 
 }
-</pre><br>
+</pre>
 
 <pre>public interface LifeInterface {
 	/** Calcola l'evoluzione dello stato alla generazione successiva */
@@ -79,7 +79,7 @@ public interface ICell {
     
     /** pulisce */
     void resetGrids();
-}</pre><br>
+}</pre>
 
 Test plan (per esprimere i requisiti che le interfacce non sono in grado di esprimere).<br>
 
