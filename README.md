@@ -12,10 +12,10 @@ Laboratorio di <b>Ingegneria dei Sistemi Software</b> a.a. 2025/2026 di Laaouaj 
  * [ConwayLife Sprint1](ConwayLife/Sprint1/Sprint1/conway26Java): impostazione di un primo prototipo
    in Java con dispositivi Mock di I/O. <i>Distribuzione</i>: file jar. <br>
    Documentazione:  [conway26Java_v0.html](https://merilaaouaj.github.io/IngegneriaSistemiSoftware/conway26Java_v0.html)
- * [ConwayLife Sprint2](ConwayLife/Sprint2/Sprint2/conway26Java): <b>evoluzione</b> del primo prototipo
+ * [ConwayLife Sprint2](ConwayLife/Sprint2/conway26JavaSwing): <b>evoluzione</b> del primo prototipo
    con un dispositivo di output realizzato in Swing. <i>Distribuzione</i>: file jar
  ### Sistemi come servizi
  * ...
  ### Sistema ConwayLife con pagine HTML
- * [ConwayLife Sprint3](ConwayLife/Sprint3/Sprint3/conway26Java): evoluzione del sistema in locale
+ * [ConwayLife Sprint3](ConwayLife/Sprint3/conway26GuiHtml): evoluzione del sistema in locale
    usando una pagina HTML come dispositivo di I/O. <i>Distribuzione</i>: Docker yaml.
