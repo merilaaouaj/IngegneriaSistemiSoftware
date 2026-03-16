@@ -5,104 +5,101 @@ import unibo.basicomm23.utils.CommUtils;
 
 public class Grid implements IGrid{
 
-	private Cell[][] gridrep;
-	private int rows, cols;
+	private int rows;
+	private int cols;
+	private ICell[][] grid;
 	
-	public Grid( int rowsNum, int colsNum) {
-		this.rows = rowsNum;
-		this.cols = rowsNum;
-		gridrep = new Cell[rowsNum][colsNum];	
-		initGrid();
+	public Grid(int rows, int cols) {
+		this.rows=rows;
+		this.cols=cols;
+		this.grid=new ICell[rows][cols];
+		for (int i=0; i<rows; i++) {
+			for(int j=0; j<cols; j++) {
+				this.grid[i][j]=new Cell();
+			}
+		}
 	}
-	
-
-	  protected void initGrid() {
-		  CommUtils.outyellow("Grid | initGrid rows=" + rows + " cols=" + cols);
-		  for (int i = 0; i < rows; i++) {
-		     for (int j = 0; j < cols; j++) {
-		    	 gridrep[i][j] = new Cell();
-		     }
-		  }
-		  //CommUtils.outyellow("Grid | initGrid done");
-	  }	
 	  
 	  @Override
 	  public int getRowsNum() {
-		  return rows;
+		  return this.rows;
 	  }
+	  
 	  @Override
 	  public int getColsNum() {
-		  return cols;
+		  return this.cols;
 	  }
-	  @Override
-	  public Cell getCell(int x, int y) {
-		  return gridrep[x][y] ;
-	  }
-	  @Override
-	  public void setCellValue(int x, int y, boolean state) {
-		  gridrep[x][y].setStatus(state);
-	  }
-	  @Override
-	  public boolean getCellValue(int x, int y) {
-		  return gridrep[x][y].isAlive();
-	  }
-	  @Override
-	  public void reset() {
-			for (int i = 0; i < rows; i++) {
-				for (int j = 0; j < cols; j++) {
-					gridrep[i][j].setStatus(false);
-				}
-			}
-	  }
-	  
-	  /*
-	   * Grid non deve sapere di I/O
-	   */
-	  
-	  public String toString() {
-		    return Arrays.stream( gridrep ) // Stream di Cell[] (le righe)
-	        .map(row -> {
-	            // Trasformiamo ogni riga in una stringa di . e O
-	            StringBuilder sb = new StringBuilder();
-	            for (Cell cell : row) {
-	                sb.append(cell.isAlive() ? "O " : ". ");
+
+		@Override
+		public ICell getCell(int row, int column) {
+			return this.grid[row][column];
+		}
+
+		@Override
+		public void setCellValue(int row, int column, boolean state) {
+			this.grid[row][column].setStatus(state);
+		}
+
+		@Override
+		public boolean getCellValue(int row, int column) {
+			return this.grid[row][column].isAlive();
+		}
+		
+		@Override
+		public int countNeighbors(int row, int colums) {
+			int count = 0;
+			
+	        for (int i = -1; i <= 1; i++) {
+	            for (int j = -1; j <= 1; j++) {
+	                
+	                if (i == 0 && j == 0) continue;
+
+	                int neighborRow = row + i;
+	                int neighborCol = colums + j;
+
+	                if (neighborRow >= 0 && neighborRow < rows && neighborCol >= 0 && neighborCol < cols) {
+	                    
+	                    if (grid[neighborRow][neighborCol].isAlive()) {
+	                        count++;
+	                    }
+	                }
 	            }
-	            return sb.toString();
-	        })
-	        .collect(Collectors.joining("\n")); // Uniamo le righe con un a capo  
-	  }
-	   
-}
+	        }
+	        return count;
+		}
+		
+		@Override
+		  public void reset() {
+				for (int i = 0; i < rows; i++) {
+					for (int j = 0; j < cols; j++) {
+						grid[i][j].setStatus(false);
+					}
+				}
+		  }
+		
+		@Override
+		public String toString() {
+		    StringBuilder sb = new StringBuilder();
 
-//public void printGrid() {
-//	for (int i = 0; i < rows; i++) {
-//		for (int j = 0; j < cols; j++) {
-//			CommUtils.outcyan("cell x="+ i + "y="+j+ ":" +  getCellValue(i,j));
-//		}
-//		CommUtils.outblack("\n");
-//	}
-//	}
+		    for (int i = 0; i < rows; i++) {
+		        for (int j = 0; j < cols; j++) {
+		            
+		            if (grid[i][j].isAlive()) {
+		                sb.append("*");
+		            } else {
+		                sb.append(".");
+		            }
 
-//protected boolean[][] getGridReAsBoolArrayp() {
-//boolean[][] simplegrid = new boolean[rows][cols];
-//for (int i = 0; i < rows; i++) {
-//	for (int j = 0; j < cols; j++) {
-//		simplegrid[i][j] = gridrep[i][j].isAlive();
-//	}
-//}
-//return simplegrid;
-//}
+		            if (j < cols - 1) {
+		                sb.append(" ");
+		            }
+		        }
 
-//@Override
-//public String gridRep( ) {
-//return Arrays.stream(getGridReAsBoolArrayp()) // Stream di boolean[] (le righe)
-//    .map(row -> {
-//        // Trasformiamo ogni riga in una stringa di . e O
-//        StringBuilder sb = new StringBuilder();
-//        for (boolean cell : row) {
-//            sb.append(cell ? "O " : ". ");
-//        }
-//        return sb.toString();
-//    })
-//    .collect(Collectors.joining("\n")); // Uniamo le righe con un a capo
-//}
+		        if (i < rows - 1) {
+		            sb.append("\n");
+		        }
+		    }
+
+		    return sb.toString();
+		}
+	}

@@ -1,4 +1,5 @@
 package main.java.test;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
@@ -37,4 +38,14 @@ private ICell c;
 		boolean r = c.isAlive();
 		assertTrue( !r);
 	}	
+
+	@Test
+	public void TestSwitchStatus() {
+		System.out.println("CellTest | doing switch status");
+		c.setStatus(true);
+		c.switchCellState();
+		assertFalse(c.isAlive());
+		c.switchCellState();
+		assertTrue(c.isAlive());
+	}
 }

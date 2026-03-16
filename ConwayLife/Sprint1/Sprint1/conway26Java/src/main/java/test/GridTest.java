@@ -1,4 +1,5 @@
 package main.java.test;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.After;
@@ -9,8 +10,7 @@ import main.java.conway.domain.Grid;
 public class GridTest {
 	private static final int nRows=5;
 	private static final int nCols=5;
-	
-private Grid grid;
+	private Grid grid;
 
 	@Before
 	public void setup() {
@@ -33,6 +33,8 @@ private Grid grid;
 	public void testCGridCellValue() {
 		System.out.println("testCGridCellValue ---------------------" );
 		grid.setCellValue(0,0,true);
+		assertEquals( grid.getCell(0, 0).isAlive(), grid.getCellValue(0,0) );
+		assertEquals( grid.getCell(0, 1).isAlive(), grid.getCellValue(0,1) );
 		assertTrue(   grid.getCellValue(0,0) );
 		assertFalse(  grid.getCellValue(0,1) );
 	}
@@ -52,5 +54,12 @@ private Grid grid;
 		grid.setCellValue(0,4,true);
 		//grid.printGrid();
 	}
-
+	
+	@Test
+    public void testClear() {
+    	System.out.println("GridTest ------  clear");
+        grid.getCell(1, 1).setStatus(true);
+        grid.reset();
+        assertFalse(grid.getCell(1, 1).isAlive());
+    }
 }

@@ -24,5 +24,5 @@ public interface LifeInterface {
     void resetGrids();
     
     /** Restituisce una rappresentazione grafica testuale della grglia*/
-    //public String gridRep( );
+    public String gridRep( );
 }

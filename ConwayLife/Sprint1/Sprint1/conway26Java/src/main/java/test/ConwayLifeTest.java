@@ -23,7 +23,7 @@ public class ConwayLifeTest {
 	@Before
 	public void setup() {
 		System.out.println("ConwayLifeTest | setup");	
-		lifemodel = Life.CreateLife(nRows,nCols);
+		lifemodel = Life.CreateGameRules();
 	}
 
 	@After
