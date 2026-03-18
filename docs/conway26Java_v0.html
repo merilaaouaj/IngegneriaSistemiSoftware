@@ -42,8 +42,8 @@ R2  L’utente umano deve poter:
   
 
 <h2>Requirement analysis</h2>
-A partire dal requisito R1 si individuano le entità logiche che compongono il dominio del problema quali Cell, Grid e Life. 
-Ci poniamo una domanda fondamentale: Cosa intende il committente per Cell, Grid e Life? <br>
+A partire dal requisito R1 si individuano le entità logiche che compongono il dominio del problema quali Cell, Grid e Life. <br>
+Ci poniamo una domanda fondamentale: cosa intende il committente per Cell, Grid e Life? <br>
 
 <pre>
 <b>Cosa intende il committente per Cell?</b><br>
@@ -54,7 +54,7 @@ Per definire, invece, il comportamento attesso da una cella realizzo il seguente
 	
 <pre>
 <b>Cosa intende il committente per Grid?</b><br>
-Per Grid formalizzo il seguente modello. <a href="https://github.com/merilaaouaj/IngegneriaSistemiSoftware/blob/main/ConwayLife/Sprint1/Sprint1/conway26Java/src/main/java/conway/domain/IGrid.java" target="_blank" rel="noopener noreferrer">modello</a>.<br/>
+Per Grid formalizzo il seguente <a href="https://github.com/merilaaouaj/IngegneriaSistemiSoftware/blob/main/ConwayLife/Sprint1/Sprint1/conway26Java/src/main/java/conway/domain/IGrid.java" target="_blank" rel="noopener noreferrer">modello</a>.<br/>
 L'entità Grid è composta da Cell. E' un'entitò a due dimensioni, quali colonne e righe. <br>
 Quindi, l'entità Grid ha la possibilità di restituire le proprie dimensioni e una cella che la compone. Inoltre può settare lo stato di una cella, ottere il suo valore e resettare la Grid impostando tutte le celle di cui è composto a morte.<br>
 Per esprimere i requisiti che le interfacce non sono in grado di esprimere, sviluppo il seguente <a href="https://github.com/merilaaouaj/IngegneriaSistemiSoftware/blob/main/ConwayLife/Sprint1/Sprint1/conway26Java/src/main/java/test/GridTest.java" target="_blank" rel="noopener noreferrer">TestPlan</a>.
