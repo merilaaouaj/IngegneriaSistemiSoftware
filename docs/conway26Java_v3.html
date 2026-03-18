@@ -26,7 +26,7 @@ con i requisiti spiegati in seguito.
 
 <!-- <div class="remark"> -->
 <pre>
-R1  Dotare il gioco Life di Conway di una pagina HTML come dispositivo I/O. 
+R1  Dotare il gioco Life di Conway di una pagina HTML come dispositivo I/O.
     Il gioco consiste nell’introdurre una Griglia di Celle il cui stato (cella ‘viva’ o cella ‘morta’) 
     evolve come stabilito dallle regole di ConwayLife
 
@@ -54,7 +54,6 @@ Ci poniamo una domanda fondamentale: Cosa intende il committente per Cell, Grid 
 <pre>
 <b>Cosa intende il committente per Cell?</b><br>
 Per l'entità Cell formalizzo il seguente <a href="https://github.com/merilaaouaj/IngegneriaSistemiSoftware/blob/main/ConwayLife/Sprint1/Sprint1/conway26Java/src/main/java/conway/domain/ICell.java" target="_blank" rel="noopener noreferrer">modello</a>.<br/>
-<br>
 Cell è atomica, ha un proprio stato interno (viva o morta) e ha la possibilità di modificarlo (da viva a morta e viceversa). 
 Per definire, invece, il comportamento attesso da una cella realizzo il seguente <a href="https://github.com/merilaaouaj/IngegneriaSistemiSoftware/blob/main/ConwayLife/Sprint1/Sprint1/conway26Java/src/main/java/test/CellTest.java" target="_blank" rel="noopener noreferrer">TestPlan</a>. 
 </pre>
@@ -62,7 +61,6 @@ Per definire, invece, il comportamento attesso da una cella realizzo il seguente
 <pre>
 <b>Cosa intende il committente per Grid?</b><br>
 Per Grid formalizzo il seguente modello. <a href="https://github.com/merilaaouaj/IngegneriaSistemiSoftware/blob/main/ConwayLife/Sprint1/Sprint1/conway26Java/src/main/java/conway/domain/IGrid.java" target="_blank" rel="noopener noreferrer">modello</a>.<br/>
-<br>
 L'entità Grid è composta da Cell. E' un'entitò a due dimensioni, quali colonne e righe. <br>
 Quindi, l'entità Grid ha la possibilità di restituire le proprie dimensioni e una cella che la compone. Inoltre può settare lo stato di una cella, ottere il suo valore e resettare la Grid impostando tutte le celle di cui è composto a morte.<br>
 Per esprimere i requisiti che le interfacce non sono in grado di esprimere, sviluppo il seguente <a href="https://github.com/merilaaouaj/IngegneriaSistemiSoftware/blob/main/ConwayLife/Sprint1/Sprint1/conway26Java/src/main/java/test/GridTest.java" target="_blank" rel="noopener noreferrer">TestPlan</a>.
@@ -71,11 +69,9 @@ Per esprimere i requisiti che le interfacce non sono in grado di esprimere, svil
 <pre>
 <b>Cosa intende il committente per Life?</b><br>
 Il committente non ha idea di cosa sia Life, ma mi informa che è la logica del gioca (contiene le regole). 
-Per Life, quindi, formalizzo il seguente modello. <a href="https://github.com/merilaaouaj/IngegneriaSistemiSoftware/blob/main/ConwayLife/Sprint1/Sprint1/conway26Java/src/main/java/conway/domain/LifeController.java" target="_blank" rel="noopener noreferrer">modello</a>.<br/>
-<br>
+Per Life, quindi, formalizzo il seguente <a href="https://github.com/merilaaouaj/IngegneriaSistemiSoftware/blob/main/ConwayLife/Sprint1/Sprint1/conway26Java/src/main/java/conway/domain/LifeController.java" target="_blank" rel="noopener noreferrer">modello</a>.<br/>
 Per esprimere i requisiti che le interfacce non sono in grado di esprimere, sviluppo il seguente <a href="https://github.com/merilaaouaj/IngegneriaSistemiSoftware/blob/main/ConwayLife/Sprint1/Sprint1/conway26Java/src/main/java/test/LifeTest.java" target="_blank" rel="noopener noreferrer">TestPlan</a>.
 </pre>
-
 
 <h2>Problem analysis</h2>
  
