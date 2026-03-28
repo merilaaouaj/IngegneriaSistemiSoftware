@@ -1,10 +1,14 @@
 # IngegneriaSistemiSoftware
 Laboratorio di <b>Ingegneria dei Sistemi Software</b> a.a. 2025/2026 di Laaouaj Meriem 0001241745
 
- [Testo di riferimento:](https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf) <br>
+  * [contenuti HTML](https://anatali.github.io/issLab2026/index.html)
+  * [Testo di riferimento](https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf)
+  * [Gradle Tutorial](https://anatali.github.io/issLab2026/_static/docs/GradleTutorialForCompleteBeginners.pdf)
 
- <!-- comment: [ancora personalizzata] -->
+# Lectures
+  * [Lectures HTML](https://anatali.github.io/issLab2026/LectureBologna2026.html)
 
+# Chronicle [index](https://merilaaouaj.github.io/IngegneriaSistemiSoftware/)
  <h2 id="ParteA">Parte A: Dai programmi ai Sistemi a Microservizi</h2>
 
  ### Sistema ConwayLife in locale
