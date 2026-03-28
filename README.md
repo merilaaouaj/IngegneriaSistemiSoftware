@@ -20,7 +20,7 @@ Laboratorio di <b>Ingegneria dei Sistemi Software</b> a.a. 2025/2026 di Laaouaj 
    con un dispositivo di output realizzato in Swing. <i>Distribuzione</i>: file jar
 
  ### Sistemi come servizi
- * ...
+ * [Sistema S Javalin](SistemaSJavalin): Funzione eval come Servizio Javalin
    
  ### Sistema ConwayLife con pagine HTML
  * [ConwayLife Sprint3](ConwayLife/Sprint3/conway26GuiHtml): evoluzione del sistema in locale
