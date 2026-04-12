@@ -29,6 +29,40 @@ public class GridTest {
 		int nc = grid.getColsNum();
 		assertTrue( nr==nRows && nc==nCols );
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+    public void testRowNegativo() {
+		System.out.println("GridTest | doing natural row");
+        new Grid(-1, 10);
+    }
+	@Test(expected = IllegalArgumentException.class)
+	public void testColNegativo() {
+		System.out.println("GridTest | doing natural cols");
+        new Grid(10, -1);
+    }
+	
+	@Test
+	(expected = IllegalArgumentException.class)
+	public void testParametriErratiCount1() {
+		System.out.println("GridTest | doing countAliveNeighbors with negative row");
+		grid.countNeighbors(-1, 1);	// row è minore di 0
+	}
+	@Test(expected = IllegalArgumentException.class)
+	public void testParametriErratiCount2() {
+		System.out.println("GridTest | doing countAliveNeighbors with row >= getRows");
+		grid.countNeighbors(8, 1);	// row è maggiore di getRows-1
+	}
+	@Test(expected = IllegalArgumentException.class)
+	public void testParametriErratiCount3() {
+		System.out.println("GridTest | doing countAliveNeighbors with negative col");
+		grid.countNeighbors(1, -21);	// col è minore di 0
+	}
+	@Test(expected = IllegalArgumentException.class)
+	public void testParametriErratiCount4() {
+		System.out.println("GridTest | doing countAliveNeighbors with col >= getCols");
+		grid.countNeighbors(0, 10);	// col è maggiore di getCols-1
+	}
+	
 	@Test
 	public void testCGridCellValue() {
 		System.out.println("testCGridCellValue ---------------------" );
@@ -62,4 +96,6 @@ public class GridTest {
         grid.reset();
         assertFalse(grid.getCell(1, 1).isAlive());
     }
+	
+	
 }

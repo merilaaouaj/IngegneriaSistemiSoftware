@@ -1,7 +1,6 @@
 package main.java.conway.domain;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-import unibo.basicomm23.utils.CommUtils;
 
 public class Grid implements IGrid{
 
@@ -64,6 +63,7 @@ public class Grid implements IGrid{
 	                    }
 	                }
 	            }
+
 	        }
 	        return count;
 		}
@@ -79,27 +79,27 @@ public class Grid implements IGrid{
 		
 		@Override
 		public String toString() {
-		    StringBuilder sb = new StringBuilder();
+		    return Arrays.stream( grid ) // Stream di Cell[] (le righe)
+	        .map(row -> {
+	            StringBuilder sb = new StringBuilder();
+	            for (ICell cell : row) {
+	                sb.append(cell.isAlive() ? "O " : ". ");
+	            }
+	            return sb.toString();
+	        })
+	        .collect(Collectors.joining("\n")); // Uniamo le righe con un a capo  
+	  }
 
-		    for (int i = 0; i < rows; i++) {
-		        for (int j = 0; j < cols; j++) {
-		            
-		            if (grid[i][j].isAlive()) {
-		                sb.append("*");
-		            } else {
-		                sb.append(".");
-		            }
-
-		            if (j < cols - 1) {
-		                sb.append(" ");
-		            }
-		        }
-
-		        if (i < rows - 1) {
-		            sb.append("\n");
-		        }
-		    }
-
-		    return sb.toString();
+		
+		public boolean[][] repAsBoolArray( ) {
+			boolean[][] gridasboool = new boolean[rows][cols];
+			for (int i = 0; i < rows; i++) {
+				for (int j = 0; j < cols; j++) {
+					gridasboool[i][j] = getCell(i, j).isAlive();
+				}
+			}
+			return gridasboool;
 		}
-	}
+		
+}
+
