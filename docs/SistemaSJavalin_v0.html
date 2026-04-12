@@ -20,32 +20,44 @@
 <div class="body">  
 
 <h2>Introduction</h2>
-<b>Goal:</b>Realizzazione di un servizio in Java che fa il calcolo dei valori di una espressione matematica con deployment del servizio in docker usando il framework javalin
+<b>Goal:</b> Realizzazione di un servizio in Java di valutazione di una espressione matematica
 
 <h2>Requirements</h2>
 
  
-<pre>
-		<b>R1</b>Realizzare un servizio Java che calcoli i valori di una data espressione matematica: sin(x) + cos(&radic;3 * x)<br>
-		<b>R2</b>Il servizio deve essere raggiungibile sia via WebSocket, sia via HTTP/1 e HTTP/2<br>
-	    <b>R3</b>L'utente interagisce tramite una pagina html che gli permetta di specificare la x per cui si vuole valutare la funzione e la modalità di interazione (WebSocket, Get o Post)<br>
-		<b>R4</b>il deployment dell'applicazione deve avvenire mediante Docker.<br>
-</pre>
+<p>
+	<ul>
+	<li>
+		<b>R1</b> Realizzare un servizio Java che calcoli i valori di una data espressione matematica: sin(x) + cos(&radic;3 * x)
+	</li>
+	<li>	
+		<b>R2</b> Il servizio deve essere raggiungibile sia via WebSocket, sia via HTTP/1 e HTTP/2
+	</li>
+	<li><b>R3</b> L'utente interagisce tramite una pagina html che gli permetta di specificare la x per cui si vuole valutare la funzione e la modalità di interazione (WebSocket, Get o Post)</li>
+	<li>
+		<b>R4</b> Il deployment dell'applicazione deve avvenire mediante Docker
+	</li>
+</ul>
+</p>
 
 <h2>Requirement analysis</h2>
-<pre>
+<p>
 	La funzone da realizzare prende in input un numero reale e restituisce un numero reale ed è la seguente.
 
+	<pre>
 	protected double eval(double x) {
 		return Math.sin(x) + Math.cos( Math.sqrt(3)*x);
 	}
-</pre>
+	</pre>
+    Si rende necessario l'utilizzo javalin per la gestione del flusso di messaggi in arrivo da e verso il componente realizzato. 
+</p>
 
 <h2>Problem analysis</h2>
-	<pre>
-	Sulla base dei principi di Separation of Concerns e Clean Architecture il sistema verrà sviluppato con la seguente infrastruttura:<br>
+	<p>
+	Sulla base dei principi di Separation of Concerns e Clean Architecture il sistema verrà sviluppato con la seguente infrastruttura a livelli, in modo tale che la scelta del framework non influenzi il dominio.<br>
 	<img src="./img/StrutturaBetter.png" alt="infrastruttura" width="75%" height="75%">
-	</pre>
+
+ </p>
 
 <h2>Test plans</h2> 
 <pre></pre>
@@ -60,7 +72,7 @@
 
 
 <h2>Deployment</h2> 
-<pre>Il deployment avviene mediante Docker.</pre>
+<p>Il deployment avviene mediante Docker.</p>
 
  
 <h2>Maintenance</h2> 
