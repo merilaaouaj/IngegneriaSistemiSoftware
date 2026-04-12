@@ -8,6 +8,12 @@ import java.util.concurrent.CompletableFuture;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.websocket.WsMessageContext;
+import main.java.conway.domain.GameController;
+import main.java.conway.domain.IGrid;
+import main.java.conway.domain.IOutDev;
+import main.java.conway.domain.Life;
+import main.java.conway.domain.LifeController;
+import main.java.conway.domain.LifeInterface;
 import unibo.basicomm23.utils.CommUtils;
 import unibo.basicomm23.interfaces.IApplMessage;
 import unibo.basicomm23.msg.ApplMessage;
@@ -15,6 +21,8 @@ import unibo.basicomm23.msg.ApplMessage;
 public class IoJavalin {
 	
 	private WsMessageContext pageCtx ;
+	private GameController controller;
+	
 	public IoJavalin() {
         var app = Javalin.create(config -> {
 			config.staticFiles.add(staticFiles -> {
@@ -118,20 +126,37 @@ public class IoJavalin {
                 	IApplMessage m = new ApplMessage(message);
                     CommUtils.outblue("IoJavalin |  eval:" + m.msgContent() );
                     if( m.msgContent().equals("ready")) { 
-                    	pageCtx = ctx;  //memorizzo connession pagina
-                    }else if( m.msgContent().contains("cell(")) { 
-                    	//Funziona se arriva da CallerServerWs es. cell(5,6,1)
-                    	pageCtx.send( m.msgContent()); 
-                    	//TODO: inviare a LifeController
-                    }else ctx.send(m.msgContent());
+                    	pageCtx = ctx;  //memorizzo connessione pagina
+                    } else if( m.msgContent().equals("start")) { 
+                    	controller.onStart();
+                    } else if( m.msgContent().equals("stop")) {
+                    	controller.onStop();
+                    } else if( m.msgContent().equals("clear")) {
+                    	controller.onClear();
+                    }else if( m.msgContent().contains("cell(")) {  //Funziona se arriva da CallerServerWs es. cell(5,6,1)
+                    	//cliente ha premuto una cella
+                    	//pageCtx.send( m.msgContent()); 
+                    	
+                    	//TODO: iniviare a Lifecontroller
+
+                    	// cell(x,y)
+                    	String coords = m.msgContent().replace("cell(", "").replace(")", "");
+                    	String[] parts = coords.split(",");
+
+                    	int x = Integer.parseInt(parts[0].trim());
+                    	int y = Integer.parseInt(parts[1].trim());
+                    	//parts[2] è lo stato 
+                    	
+						controller.switchCellState(x, y);
+
+						CommUtils.outmagenta("IoJavalin | switch cell (" + x + "," + y + ")");
+                    }else { ctx.send(m.msgContent()); }
                 }catch(Exception e) {
                 	CommUtils.outred("IoJavalin |  error:" + e.getMessage());
                 }               
             });
         });        
 	}
-	
- 
 	
 
 	
@@ -141,4 +166,41 @@ public class IoJavalin {
 		new IoJavalin();
 	}
 
+	//funzione per iniettare il GameController in IoJavalin
+	public void setController(GameController cc) {
+			this.controller = cc;
+		}
+		
+	@Override
+	public void display(String msg) {
+		if (pageCtx != null) {
+			pageCtx.send(msg);
+		}
+	}
+	
+
+	@Override
+	public void close() {
+        if (pageCtx != null && pageCtx.session.isOpen()) {
+            pageCtx.session.close();
+        }
+	}
+	
+	@Override
+	public void displayCell(IGrid grid, int x, int y) {
+		if (pageCtx != null && pageCtx.session.isOpen()) {
+	        int state = grid.getCellValue(x, y) ? 1 : 0; 
+	        pageCtx.send("cell(" + x + "," + y + "," + state + ")");
+	    }
+		
+	}
+
+	@Override
+	public void displayGrid(IGrid grid) {
+		for (int i = 0; i < grid.getRowsNum(); i++) {
+			for (int j = 0; j < grid.getColsNum(); j++) {
+				displayCell(grid, i, j);
+			}
+		}
+	}
 }

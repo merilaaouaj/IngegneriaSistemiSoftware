@@ -12,7 +12,7 @@ import java.net.http.HttpClient;
 import java.net.http.WebSocket;
  
 /*
- * PREMESSA: lanciare SistemaSJavalApplMsgsQueued
+ * PREMESSA: lanciare MainConwayGui
  *  
  * Componente che usa un WebSocketClient
  * per inviare messaggi su una WebSocket
@@ -43,15 +43,6 @@ public class CallerServerWs  {
         // Invio di un messaggio al server
         webSocket.sendText(setctrl.toString(), true);
         
-<<<<<<< HEAD
-      String c56 = reqmsg.toString().replace("CELL", "cell(5,6)");
-        webSocket.sendText(c56, true);
-
-        // Aspetta che la connessione venga chiusa o interrotta
-        latch.await();
-        CommUtils.outred("setup1 fallito");
-    }     
-=======
        // webSocket.sendText("ciao valeria", true);
         
 //        String c56 = reqmsg.toString().replace("CELL", "cell(5,6)");
@@ -61,7 +52,6 @@ public class CallerServerWs  {
         latch.await();
         CommUtils.outred("CallerServerWs | setup1 finito");
    }     
->>>>>>> 86df8baa07f4133cb3a4dc120e161505c0dfd418
 
     
     protected void sendCellChange( ) throws InterruptedException {
@@ -70,7 +60,7 @@ public class CallerServerWs  {
         WebSocket webSocket = client.newWebSocketBuilder()
             .buildAsync(URI.create("ws://localhost:8080/eval"), new WebSocketListener(latch))
             .join();
-
+        
         // Invio di un messaggio al server
         // webSocket.sendText(setctrl.toString(), true);
         
