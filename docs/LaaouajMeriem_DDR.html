@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="css/mystyle.css">
+<!--
+    <script type="text/javascript" src="../css/issStyle.js"></script>
+-->
+    
+</head>
+   
+<title>Differential Drive Robot (DDR)</title></head>
+    
+
+<body>
+<div id="top">
+<h1>Differential Drive Robot (DDR)</h1>
+</div>  
+
+<div class="body">  
+
+<h2>Introduction</h2>
+<b>Goal: </b>Costruire un sistema software che comanda un Differential Drive Robot (DDR) in modo che, 
+partendo dalla posizione iniziale HOME, il robot si sposti lungo il perimetro di una stanza rettangolare vuota. 
+Il DDR si deve fermare quando tornato in HOME.
+ 
+<h2>Requirements</h2>
+<!-- <div class="remark"> -->
+<p>Costruire un sistema software che comanda un Differential Drive Robot (DDR) in modo che, 
+partendo dalla posizione iniziale HOME, il robot si sposti lungo il perimetro di una stanza rettangolare vuota. 
+Il DDR si deve fermare quando tornato in HOME.</p>
+Il DDR è anche sensibile ai dati rilevati da un Radar.<br>
+Quando il Radar rileva un 'intruso' a una distanza minore di una distanza prefissata ``DMIN``:
+<ul class="req-list">
+	<li>
+		<span>se il DDR si sta muovendo , il DDR si ferma fino a che il Radar non rileva più un 'intruso' così vicino</span>
+	</li>
+    <li>
+        <span>se il DDR è fermo in HOME, il DDR ruota su sè stesso fino a che un 'intruso' così vicino scompare</span>
+    </li>
+</ul>
+
+<h2>Requirement analysis</h2>
+<p>    
+	<b>Quali sono le entità del sistema?</i></b><br>
+	<ol class="req-list">
+	<li>
+		<span><b>HOME</b>: per il committente HOME è la posizione iniziale del DDR all'interno della stanza. <br>
+		Partiamo dalla formalizzazione della stanza. Possiamo modellare la stanza come un rettangolo in un piano con base B e altezza H, dove entrambe le misure sono espresse in metri.<br>
+		Nel piano, il robot occupperà un'area, non un punto. Posso assumare che l'area sia quadrata di lato R. Posso quindi misurare la stanza in unità robotiche (R). <br>
+		Per rappresentare la stanza usiamo tre variabili (B, H e R). <br> Mentre HOME possiamo rappresentarla da una coppia di coordinate (xHome e yHome).
+		</span>
+		<pre>
+		var B //base
+    	var H //altezza
+    	var R //unità robotica
+
+		//HOME
+		var xHome = 0
+		var yHome = 0
+		</pre>
+	</li>
+	<li>
+        <span><b>RADAR</b>: è un'entità proattiva che rileva la presenza di intrusi a una distanza minore di DMIN (distanza prefissata) misurata in metri. <br>
+	    Il radar può fare due cose: rispondere alle richieste oppure emettere eventi. <br>
+		Nel primo caso comunica la distanza rilevata in risposta ad una richiesta del sistema, mentre nel secondo caso comunica la distanza rilevata tramite un evento.<br>
+		Formalizziamo il radar come un <a href="https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#section.17.1" target="_blank" rel="noopener noreferrer">attore</a>.</span><br>
+    </li>
+    <li>
+        <span><b>Differential Drive Robot (DDR)</b>: è un'entità reattiva priva della capacità di fare cose, è un semplice attuatore di comandi.<br>
+		Il DDR si può muovere in avanti e ruotare su sè stesso di 90°, inoltre conosce il perimetro della stanza. <br>Lo modelliamo come servizio.</span>
+    </li>
+</ol>
+
+	<pre>
+System ddr 
+/*
+ * DDR.qak
+ */
+
+Event radar : distance(x) //distanza in metri 
+
+ //contesto del sistema
+Context ctxddr ip [ host="localhost"      port=8040 ] 
+Context ctxddrgrid    ip [ host="127.0.0.1"  port=8050 ]
+
+//definiamo Attore radar.
+QActor radar context ctxddr {
+}
+
+ 	 </pre>
+</p>
+
+<h2>Problem analysis</h2>
+
+<h2>Test plans</h2> 
+
+
+
+<h2>Project</h2> 
+ 
+
+<h2>Testing</h2> 
+ 
+
+<h2>Deployment</h2> 
+<p>
+	
+</p>
+ 
+<h2>Maintenance</h2> 
+ 
+<!-- USEFUL
+<table style="width:100%" border="1">
+<tr>
+<td style="width:50%">
+</td>
+<td></td>
+</tr>
+</table>
+-->
+	      	
+<br/><br/> 	
+</div>  
+<div style="background-color:rgba(86, 56, 253, 0.9); width:70%;text-align:left;color:white">
+By Meriem Laaouaj email: meriem.laaouaj@studio.unibo.it, 
+<!-- <img src="./img/mbot-S.jpg" alt="mbot" width="15%" height="15%"> -->
+<img src="./img/immagine.jpg" alt="img" width="10%" height="80%">
+GIT repo: https://github.com/merilaaouaj/IngegneriaSistemiSoftware
+</div> 
+</body>
+</html>
