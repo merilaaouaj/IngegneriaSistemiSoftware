@@ -47,7 +47,7 @@ Quando il Radar rileva un 'intruso' a una distanza minore di una distanza prefis
 	<li>
 		<span><b>HOME</b>: per il committente HOME è la posizione iniziale del DDR all'interno della stanza. <br>
 		Partiamo dalla formalizzazione della stanza. Possiamo modellare la stanza come un rettangolo in un piano con base B e altezza H, dove entrambe le misure sono espresse in metri.<br>
-		Nel piano, il robot occupperà un'area, non un punto. Posso assumare che l'area sia quadrata di lato R. Posso quindi misurare la stanza in unità robotiche (R). <br>
+		Nel piano, il robot occupperà un'area, non un punto. Posso assumare che l'area sia quadrata di lato R. Posso quindi misurare la stanza in unità robotiche (R). Posso quindi considerare l'unità robotica come cella della mia stanza, che quindi posso rappresentare come una griglia.<br>
 		Per rappresentare la stanza usiamo tre variabili (B, H e R). <br> Mentre HOME possiamo rappresentarla da una coppia di coordinate (xHome e yHome).
 		</span>
 		<pre>
@@ -65,30 +65,89 @@ Quando il Radar rileva un 'intruso' a una distanza minore di una distanza prefis
 	    Il radar può fare due cose: rispondere alle richieste oppure emettere eventi. <br>
 		Nel primo caso comunica la distanza rilevata in risposta ad una richiesta del sistema, mentre nel secondo caso comunica la distanza rilevata tramite un evento.<br>
 		Formalizziamo il radar come un <a href="https://anatali.github.io/issLab2026/_static/docs/Protobook.pdf#section.17.1" target="_blank" rel="noopener noreferrer">attore</a>.</span><br>
-    </li>
+        
+		Primo caso: <br>
+		<pre>
+		System ddr
+
+		/*
+		* DDR.qak
+		*/
+		
+		//definizione dei messaggi
+		Event sonardata : distance(x) //distanza in metri
+
+		Context ctxddr	ip [ host="localhost" 	port=8040 ]
+
+		//definiamo attore radar
+		QActor radar context ctxddr {
+			[# 
+				var D = 0
+				var Timer = 1000L
+			#]
+			State s0 initial {
+				println("$name | go") color magenta
+			}
+			Goto distanza
+			
+			State distanza{
+				emit sonardata : distance(x)
+			}
+			Transition t0 
+				whenTimeVar Timer -> distanza
+		}
+		</pre><br>
+
+		Secondo caso: <br>
+		<pre>
+		System ddr
+
+		/*
+		*  DDR.qak
+		*/
+
+		//  request-reply
+		Request getSonarDistance :  getSonarDistance(x) "richiesta del sistema"
+		Reply   radar : distance(D)  for getSonarDistance
+
+		//contesto del sistema
+		Context ctxddr	ip [ host="localhost" 	port=8040 ]
+
+		//definiamo attore Radar
+		QActor radar context ctxddr{
+			[# 
+				var D = 0
+				var Timer = 1000L
+			#]
+			State s0 initial {
+				println("$name | go") color magenta
+			}
+			Goto distanza
+			
+			State distanza{
+				
+			}
+			Transition t0 
+				whenTimeVar Timer -> distanza
+				whenRequest getSonarDistance -> handleRequest
+		
+			State handleRequest{
+				onMsg( getSonarDistance : getSonarDistance(D) ){
+					replyTo getSonarDistance with radar : distance( $D )  
+				} 
+			}  
+			Transition t0 
+				whenTimeVar Timer -> distanza
+		}
+		</pre>
+	</li>
     <li>
         <span><b>Differential Drive Robot (DDR)</b>: è un'entità reattiva priva della capacità di fare cose, è un semplice attuatore di comandi.<br>
-		Il DDR si può muovere in avanti e ruotare su sè stesso di 90°, inoltre conosce il perimetro della stanza. <br>Lo modelliamo come servizio.</span>
+		Il DDR si può muovere in avanti e ruotare su sè stesso di 90°, inoltre conosce il perimetro della stanza. <br>Utilizzando il linguaggio QAK, che ci permette di ridurre l'abstraction gap, modello il robot come servizio. <br>
+	    Il robot è fornito dal committente stesso, perciò rispettiamo le specifiche date. 
+	</span>
     </li>
 </ol>
-
-	<pre>
-System ddr 
-/*
- * DDR.qak
- */
-
-Event radar : distance(x) //distanza in metri 
-
- //contesto del sistema
-Context ctxddr ip [ host="localhost"      port=8040 ] 
-Context ctxddrgrid    ip [ host="127.0.0.1"  port=8050 ]
-
-//definiamo Attore radar.
-QActor radar context ctxddr {
-}
-
- 	 </pre>
 </p>
 
 <h2>Problem analysis</h2>
